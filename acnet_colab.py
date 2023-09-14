@@ -135,16 +135,6 @@ hypermodel.fit([TOA_xtrain, angles_xtrain, AOT_xtrain], ytrain_iCOR,
                validation_data=([TOA_xvali, angles_xvali, AOT_xvali], y_vali_iCOR),
                batch_size=256, epochs=best_epoch)
 
-
-def show_train_history(train_history, train, validation):
-    plt.plot(train_history.history[train])
-    plt.plot(train_history.history[validation])
-    plt.title('First phase')
-    plt.ylabel(train)
-    plt.xlabel('Epoch')
-    plt.legend(['train', 'validation'], loc='upper left')
-    plt.show()
-    
     
 # Define the directory where you want to save the trained model
 model_save_dir = ''
