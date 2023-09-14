@@ -40,9 +40,10 @@ hypermodel = tf.keras.models.load_model('my_trained_model.h5')
 
 y_prediction = hypermodel.predict([TOA_xtesting, angles_xtesting, AOT_xtesting])  # prediction from x_test using model above
 # path_save = tkinter.filedialog.asksaveasfilename(title=u'Save to excel file', filetypes=[("Excel", ".csv")])
-path_save = '/content/'
-np.savetxt(path_save, y_prediction, delimiter=",") #save to your specific folder
+path_save_csv = 'output.csv'
+np.savetxt(path_save_csv, y_prediction, delimiter=",") #save to your specific folder
 ## or save y_prediction to npy to transfer to image in code "Result_Transfer.py"
 from numpy import save
+path_save_npy = 'output.npy'
 # path_save = tkinter.filedialog.asksaveasfilename(title=u'Save npy file', filetypes=[("NPY", ".npy")])
-save(path_save, y_prediction)
+save(path_save_npy, y_prediction)
