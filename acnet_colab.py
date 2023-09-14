@@ -36,7 +36,7 @@ TOA_xtrain, angles_xtrain, AOT_xtrain, ytrain_iCOR, TOA_xvali, angles_xvali, AOT
 #source: \\140.116.80.130\home\AC-Net\InputforANN\NEWupdateDataset_May2021\dataforTESTING_update22May\Testing_insitulocation_VN
 ## or \\140.116.80.130\home\AC-Net\InputforANN\NEWupdateDataset_May2021\dataforTESTING_update22May\Testing_othercountries
 def load_testingdata():
-    TOA_xtesting = np.load('TOA_XVali.npy')
+    TOA_xtesting = np.load('TOA_XVali.npy') #use val data bcs actly we dont need to test (only train)
     angles_xtesting = np.load('angles_XVali.npy')
     AOT_xtesting = np.load('AOT_XVali.npy')
 
@@ -144,29 +144,55 @@ def show_train_history(train_history, train, validation):
     plt.xlabel('Epoch')
     plt.legend(['train', 'validation'], loc='upper left')
     plt.show()
+    
+    
+# Define the directory where you want to save the trained model
+model_save_dir = ''
 
-plt.figure(1)
-show_train_history(train_history, 'loss', 'val_loss')
-plt.figure(2)
-show_train_history(train_history, 'mape', 'val_mape')
-plt.figure(3)
-show_train_history(train_history, 'accuracy', 'val_accuracy')
+# Save the trained model
+model.save(model_save_dir + 'my_trained_model.h5')
+
+# Optionally, you can save the tuner object and the best hyperparameters as well
+tuner.save(model_save_dir + 'my_tuner')
+
+# ...
+
+# # Load the trained model from the specified directory
+# loaded_model = tf.keras.models.load_model(model_save_dir + 'my_trained_model.h5')
+
+# # Optionally, you can also load the tuner object and best hyperparameters
+# loaded_tuner = kt.Hyperband(
+#     build_model,
+#     objective='val_accuracy',
+#     max_epochs=30,
+#     hyperband_iterations=2,
+#     overwrite=True  # Set this to True if you want to overwrite the existing tuner
+# )
+# loaded_tuner = kt.tuners.tuner_utils.load_tuner(model_save_dir + 'my_tuner')
 
 
-# #  EVALUATE THE PREDICTION RESULT with insitu and iCOR
-# scores1 = hypermodel.evaluate([TOA_xtesting, angles_xtesting, AOT_xtesting], ytest_insitu, verbose=0) # score = [loss, accuracy] as setup in the model.compile
-# print(scores1)
-# scores2 = hypermodel.evaluate([TOA_xtesting, angles_xtesting, AOT_xtesting], ytest_iCOR, verbose=0)  # score = [loss, accuracy] as setup in the model.compile
-# print(scores2)
+# plt.figure(1)
+# show_train_history(train_history, 'loss', 'val_loss')
+# plt.figure(2)
+# show_train_history(train_history, 'mape', 'val_mape')
+# plt.figure(3)
+# show_train_history(train_history, 'accuracy', 'val_accuracy')
 
-y_prediction = hypermodel.predict([TOA_xtesting, angles_xtesting, AOT_xtesting])  # prediction from x_test using model above
-# path_save = tkinter.filedialog.asksaveasfilename(title=u'Save to excel file', filetypes=[("Excel", ".csv")])
-path_save = '/content/'
-np.savetxt(path_save, y_prediction, delimiter=",") #save to your specific folder
-## or save y_prediction to npy to transfer to image in code "Result_Transfer.py"
-from numpy import save
-# path_save = tkinter.filedialog.asksaveasfilename(title=u'Save npy file', filetypes=[("NPY", ".npy")])
-save(path_save, y_prediction)
+
+# # #  EVALUATE THE PREDICTION RESULT with insitu and iCOR
+# # scores1 = hypermodel.evaluate([TOA_xtesting, angles_xtesting, AOT_xtesting], ytest_insitu, verbose=0) # score = [loss, accuracy] as setup in the model.compile
+# # print(scores1)
+# # scores2 = hypermodel.evaluate([TOA_xtesting, angles_xtesting, AOT_xtesting], ytest_iCOR, verbose=0)  # score = [loss, accuracy] as setup in the model.compile
+# # print(scores2)
+
+# y_prediction = hypermodel.predict([TOA_xtesting, angles_xtesting, AOT_xtesting])  # prediction from x_test using model above
+# # path_save = tkinter.filedialog.asksaveasfilename(title=u'Save to excel file', filetypes=[("Excel", ".csv")])
+# path_save = '/content/'
+# np.savetxt(path_save, y_prediction, delimiter=",") #save to your specific folder
+# ## or save y_prediction to npy to transfer to image in code "Result_Transfer.py"
+# from numpy import save
+# # path_save = tkinter.filedialog.asksaveasfilename(title=u'Save npy file', filetypes=[("NPY", ".npy")])
+# save(path_save, y_prediction)
 
 
 
