@@ -13,7 +13,7 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, Conv3D, Activation, BatchNormalization, Dense, Dropout,Flatten, Reshape
 from tensorflow.keras.layers import Concatenate
 from tensorflow.keras.regularizers import l2
-import kerastuner as kt
+import keras_tuner as kt
 
 
 ## 2. LOAD DATA
