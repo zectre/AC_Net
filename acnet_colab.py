@@ -137,10 +137,10 @@ hypermodel.fit([TOA_xtrain, angles_xtrain, AOT_xtrain], ytrain_iCOR,
 
     
 # Define the directory where you want to save the trained model
-model_save_dir = ''
+# model_save_dir = ''
 
 # Save the trained model
-model.save(model_save_dir + 'my_trained_model.h5')
+model.save('my_trained_model.h5')
 
 # Optionally, you can save the tuner object and the best hyperparameters as well
 tuner.save(model_save_dir + 'my_tuner')
